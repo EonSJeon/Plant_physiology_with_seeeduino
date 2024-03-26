@@ -1,0 +1,21 @@
+port = '/dev/cu.usbmodem101'; % Assuming the device is the first one
+s = serialport(port, 9600);
+
+% Sine wave parameters
+frequency = 10; % Hz
+duration = 10; % seconds
+sampleRate = 100; % samples per second
+time = 0:1/sampleRate:duration;
+
+% Generate sine wave
+amplitude = 255; % Adjust based on PWM resolution (0-255 for 8-bit)
+sineWave = (sin(2 * pi * frequency * time) + 1) * amplitude;
+
+% Send sine wave samples
+for i = 1:length(sineWave)
+    disp(uint8(sineWave(i)))
+    write(s, uint8(sineWave(i)), 'uint8');
+    pause(1/sampleRate); % Maintain sampling rate timing
+end
+
+clear s

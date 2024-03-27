@@ -11,9 +11,10 @@
 % Filtered_BYB_Recording_2024-03-06_13.37.09_1st.csv	Filtered_p5-actpot1.csv					Filtered_p5-actpot5.csv
 % Filtered_lockedopen1.csv				Filtered_p5-actpot3.csv
 
+
 port = '/dev/cu.usbmodem101'; % Update with your actual port
 device = serialport(port, 9600);
-
+y
 mV_TO_UINT16_CONST=2^16/3410;
 AP_AMP_CONST=300;
 

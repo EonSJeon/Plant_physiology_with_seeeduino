@@ -1,6 +1,6 @@
 
 % Parameters
-frequency = 200; % frequency of the sine wave in Hz
+frequency = 1; % frequency of the sine wave in Hz
 sampleRate = 9600; % sample rate in Hz
 duration = 10; % duration of the signal in seconds
 

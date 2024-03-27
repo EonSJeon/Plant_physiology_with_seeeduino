@@ -1,8 +1,8 @@
 % Define the folder containing your CSV files
 folderPath = './Action Potential Data/';
 
-% Directory for saving figures
-figuresDir = './Action Potential Figures/';
+% Directory for saving figures and filtered data
+figuresDir = './Filtered Action Potential Data/';
 if ~exist(figuresDir, 'dir')
     mkdir(figuresDir);
 end
@@ -37,41 +37,21 @@ for k = 1:length(csvFiles)
         % Apply the filter
         filteredVoltage = filtfilt(d, voltage);
         
-        % Plot the filtered data in the time domain
-        figTimeDomain = figure;
-        plot(time, filteredVoltage);
-        title(['Time Domain for ', csvFiles(k).name]);
-        xlabel('Time (s)');
-        ylabel('Voltage (V)');
+        % Create a table with the time and filtered voltage
+        filteredData = table(time, filteredVoltage, 'VariableNames', {'Time', 'FilteredVoltage'});
         
-        % Save the time domain figure
-        saveas(figTimeDomain, fullfile(figuresDir, [csvFiles(k).name(1:end-4), '_TimeDomain.jpg']), 'jpeg');
+        % Construct the filename for the filtered data
+        filteredFileName = sprintf('Filtered_%s', csvFiles(k).name);
         
-        % Perform FFT on the filtered voltage data
-        Y = fft(filteredVoltage);
+        % Full path for saving the filtered data CSV
+        filteredFilePath = fullfile(figuresDir, filteredFileName);
         
-        % Calculate the number of points
-        N = length(Y);
+        % Save the filtered data as a CSV file
+        writetable(filteredData, filteredFilePath);
         
-        % Calculate the frequency domain
-        f = (0:N-1)*(Fs/N);
-        
-        % Take the magnitude of the FFT
-        Y_magnitude = abs(Y);
-        
-        % Plot the magnitude of the FFT in a new figure
-        figFreqDomain = figure;
-        plot(f, Y_magnitude);
-        title(['Magnitude of FFT for ', csvFiles(k).name]);
-        xlim([0 80]);
-        xlabel('Frequency (Hz)');
-        ylabel('|Y(f)|');
-        
-        % Save the frequency domain figure
-        saveas(figFreqDomain, fullfile(figuresDir, [csvFiles(k).name(1:end-4), '_FreqDomain.jpg']), 'jpeg');
     else
         fprintf('Skipping %s due to missing data.\n', csvFiles(k).name);
     end
 end
 
-% Note: Ensure the folderPath and figuresDir are correctly set to the paths where your CSV files are located and where you want to save the figures.
+% Note: Ensure the folderPath and figuresDir are correctly set to the paths where your CSV files are located and where you want to save the filtered data.

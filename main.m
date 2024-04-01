@@ -25,9 +25,6 @@ xlabel('Time');
 ylabel('Data Value');
 title('Real-time Data from Seeeduino');
 
-
-
-
 % Ensure global flags and buffers are initialized
 global dataBuffer;
 dataBuffer = [];

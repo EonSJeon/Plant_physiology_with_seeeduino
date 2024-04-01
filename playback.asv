@@ -18,8 +18,8 @@ OFFSET = 1300;
 mV_TO_UINT16_CONST = 2^16 / 3410;
 
 % Comment out the device setup as this requires the actual hardware to test
-port = '/dev/cu.usbmodem101'; % Update with your actual port
-device = serialport(port, 9600);
+% port = '/dev/cu.usbmodem101'; % Update with your actual port
+% device = serialport(port, 9600);
 
 % CSV file path
 csvFilePath = 'rect_wave.csv'; % Example path, adjust as needed

@@ -68,12 +68,22 @@ function acquireData(obj, event, device)
                 dataBuffer = [dataBuffer, numericValue];
                 % Capture and append timestamp
                 timestampBuffer = [timestampBuffer, datetime('now')];
+                
+                % Keep only the last 1000 samples
+                if length(dataBuffer) > 1000
+                    dataBuffer = dataBuffer(end-999:end);
+                    timestampBuffer = timestampBuffer(end-999:end);
+                end
             end
         end
     catch ME
         disp(['Error reading data: ', ME.message]);
     end
 end
+
+% The updatePlot function remains largely the same, as it will now work
+% with up to 1000 samples due to the changes in acquireData.
+
 
 
 function updatePlot(obj, event, h)

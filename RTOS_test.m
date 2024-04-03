@@ -51,14 +51,9 @@ end
 
 function sendWriteCmd()
     global START END WRITE device
-    write(device, END, 'uint8');
-    write(device, END, 'uint8');
-    write(device, END, 'uint8');
-    write(device, END, 'uint8');
-    write(device, START, 'uint8');
-    write(device, START, 'uint8');
-    write(device, START, 'uint8');
-    write(device, WRITE, 'uint8');
+    sendSignal(END,4);
+    sendSignal(START,4);
+    sendSignal(WRITE,1);
 end
 
 function sendEndCmd()

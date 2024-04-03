@@ -33,7 +33,7 @@ title('Real-time Data from Seeeduino');
 dataTimer = timer;
 dataTimer.Period = 0.001; % Fast enough for most real-time applications
 dataTimer.ExecutionMode = 'fixedRate';
-dataTimer.TimerFcn = @(myTimerObj, thisEvent) acquireData(device);
+dataTimer.TimerFcn = @(myTimerObj, thisEvent) x_acquireData(device);
 
 % Plotting timer setup
 plotTimer = timer;
@@ -48,7 +48,7 @@ fig.CloseRequestFcn = @(src, evnt) closeFigure(fig, dataTimer, plotTimer, device
 start(dataTimer);
 start(plotTimer);
 
-function acquireData(device)
+function x_acquireData(device)
     global dataBuffer timestampBuffer isRunning startTime showLength;
 
     if ~isRunning

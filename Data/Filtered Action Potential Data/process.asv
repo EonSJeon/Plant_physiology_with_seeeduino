@@ -1,0 +1,45 @@
+% Step 1: Read the CSV file into a table
+data = readtable(data, 'Filtered_noninvasive1_modified.csv');
+
+ts=data.Time;
+vs=data.FilteredVoltage;
+
+figure;
+[ts1, vs1]=
+plot();
+% data.FilteredVoltage = data.FilteredVoltage * -100000;
+% data.Time = data.Time * 1000;
+% 
+% % Step 2: Multiply the 'FilteredVoltage' column by -1000
+% data.FilteredVoltage = data.FilteredVoltage * -100000;
+% data.Time = data.Time * 1000;
+% 
+% 
+% % Step 3: Write the modified table back to the CSV file
+% writetable(data, 'Filtered_noninvasive1_modified.csv');  % Saving as a new file for safety
+
+% If you want to overwrite the original file, use:
+% writetable(data, 'Filtered_noninvasive1.csv');
+
+function [resampledTs, resampledVoltages] = resampleData(originalTs, originalVoltages, Fs)
+    % Calculate the total duration of the data
+    startTime = originalTs(1);
+    endTime = originalTs(end);
+    
+    % Calculate the sampling interval based on the desired sampling frequency
+    Ts = 1000 / Fs;  % Sampling period
+    
+    % Create a new time vector with the desired sampling frequency
+    resampledTs = startTime:Ts:endTime;
+    
+    % If the last element is not exactly the end time, append it
+    if resampledTs(end) ~= endTime
+        resampledTs = [resampledTs endTime];
+    end
+    
+    % Interpolate the original voltage values at the new timestamps
+    % 'linear' interpolation is generally a good choice, but you can use
+    % other types such as 'spline' or 'pchip' depending on your data characteristics
+    resampledVoltages = interp1(originalTs, originalVoltages, resampledTs, 'linear');
+end
+

@@ -1,14 +1,14 @@
 % Step 1: Read the CSV file into a table
-data = readtable('Filtered_noninvasive1.csv');
+data = readtable('Filtered_p5-actpot5.csv');
 
 % Step 2: Multiply the 'FilteredVoltage' column by -1000
-data.FilteredVoltage = data.FilteredVoltage * -20000;
-data.FilteredVoltage = data.FilteredVoltage -min(data.FilteredVoltage);
+data.FilteredVoltage = data.FilteredVoltage * 1000 * 25;
+data.FilteredVoltage = data.FilteredVoltage + 900;
 data.Time = data.Time * 1000;
 
 
 % Step 3: Write the modified table back to the CSV file
-writetable(data, 'Filtered_noninvasive1_modified.csv');  % Saving as a new file for safety
+writetable(data, 'Filtered_p5-actpot5_modified.csv');  % Saving as a new file for safety
 
 % If you want to overwrite the original file, use:
 % writetable(data, 'Filtered_noninvasive1.csv');
